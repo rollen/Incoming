@@ -18,8 +18,19 @@ task :specs do
   end
 end
 
+file 'bin/' do
+  Dir.mkdir(binary_folder_path)
+end
+
+desc "remove the contents of the binary directory"
+task :clean => 'bin/' do
+  FileUtils.remove_dir(binary_folder.path)
+  Dir.mkdir(binary_folder_path)
+end
+
 desc "copy app into world of warcraft folder"
-task :copy do
+task :copy => 'bin/' do
+  sh "cp -R app/ bin/"
 end
 
 desc "generate toc file"
@@ -29,6 +40,11 @@ end
 
 desc "deploy application"
 task :deploy => [:generate, :copy] do
+  sh "cp -R bin/ #{wow_addon_path}"
+end
+
+def wow_addon_path
+  '/Applications/World\ of\ Warcraft/Interface/AddOns/Incoming/'
 end
 
 def body
@@ -55,5 +71,9 @@ def app_directory
 end
 
 def binary_folder
-  Dir.new(File.join(Dir.pwd, 'bin'))
+  Dir.new(binary_folder_path)
+end
+
+def binary_folder_path
+  File.join(Dir.pwd, 'bin')
 end
