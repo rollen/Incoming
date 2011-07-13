@@ -1,5 +1,8 @@
 require 'rubygems'
 require 'rake'
+require 'tasks/toc/body_template'
+require 'tasks/toc/header_template'
+require 'tasks/toc/file_writer'
 
 task :deploy do
 
@@ -10,7 +13,7 @@ task :specs do
   specs_dir = Dir.new File.join(Dir.pwd, "specs")
   Dir.chdir(specs_dir.path) do
     specs_dir.each do |file|
-      sh "tsc #{File.join(specs_dir.path, file)}" if file =~ /Spec.lua$/
+      sh "tsc #{File.join(Dir.pwd, file)}" if file =~ /_spec.lua$/
     end
   end
 end
@@ -21,8 +24,36 @@ end
 
 desc "generate toc file"
 task :generate do
+  Toc::FileWriter.new(header, body, binary_folder).create
 end
 
 desc "deploy application"
 task :deploy => [:generate, :copy] do
+end
+
+def body
+  Toc::BodyTemplate.new(app_directory)
+end
+
+def header
+  toc_header_template_path = File.join( Dir.pwd, 'tasks/templates')
+  options = {}
+  options[:interface] = "40200"
+  options[:title] = "INCOMING"
+  options[:author] = "Avelliance"
+  options[:version] = "0.10"
+  options[:Notes] = "A Simple addon"
+  options[:eMail] = "avelliance@gmail.com"
+  options[:URL] = "nil"
+  options[:DefaultState] = "Enabled"
+  options[:LoadOnDemand] = 0
+  Toc::HeaderTemplate.new("Incoming.toc", toc_header_template_path, options)
+end
+
+def app_directory
+  Dir.new(File.join(Dir.pwd, 'app'))
+end
+
+def binary_folder
+  Dir.new(File.join(Dir.pwd, 'bin'))
 end
