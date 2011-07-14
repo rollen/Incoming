@@ -20,7 +20,7 @@ module Toc
           if(File.directory?(file_name))
             directories << Dir.new(file_name)
           else
-            files << file_name if file_name =~ /.lua$/
+            files << file_name if file_name =~ /.lua$|.xml$/
           end
         end
       end

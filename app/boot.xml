@@ -1,0 +1,25 @@
+<Ui xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.blizzard.com/wow/ui/">
+  <Script file="controllers\location_message_controller.lua" />
+  <Script file="lib\location_manager.lua" />
+  <Script file="lib\output.lua" />
+  <Script file="models\location_message.lua" />
+  <Script file="boot.lua" />
+  <Include file="views\location_message_view.xml" />
+
+  <Frame name="LocationMessageView">
+    <Scripts>
+      <OnLoad> 
+        <![CDATA[
+        print("memememe")
+        location_manager = LocationManager:new()
+        location_message = LocationMessage:new(location_manager)
+        output = Output:new()
+        location_message_controller = LocationMessageController:new(location_message, output)
+
+        self:RegisterEvent('PLAYER_ENTERING_BATTLEGROUND')
+        self:SetScript('OnEvent', location_message_controller:on_enter_battleground())
+        ]]>
+      </OnLoad>
+    </Scripts>
+  </Frame>
+</Ui>
