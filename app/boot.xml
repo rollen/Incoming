@@ -5,21 +5,4 @@
   <Script file="models\location_message.lua" />
   <Script file="boot.lua" />
   <Include file="views\location_message_view.xml" />
-
-  <Frame name="LocationMessageView">
-    <Scripts>
-      <OnLoad> 
-        <![CDATA[
-        print("memememe")
-        location_manager = LocationManager:new()
-        location_message = LocationMessage:new(location_manager)
-        output = Output:new()
-        location_message_controller = LocationMessageController:new(location_message, output)
-
-        self:RegisterEvent('PLAYER_ENTERING_BATTLEGROUND')
-        self:SetScript('OnEvent', location_message_controller:on_enter_battleground())
-        ]]>
-      </OnLoad>
-    </Scripts>
-  </Frame>
 </Ui>

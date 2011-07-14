@@ -1,2 +1,129 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Frame name="LocationMessageView">
+    <Scripts>
+      <OnLoad> 
+        <![CDATA[
+        print("memememe")
+        location_manager = LocationManager:new()
+        location_message = LocationMessage:new(location_manager)
+        output = Output:new()
+        location_message_controller = LocationMessageController:new(location_message, output)
+
+        self:RegisterEvent('PLAYER_ENTERING_BATTLEGROUND')
+        self:SetScript('OnEvent', location_message_controller:on_enter_battleground())
+        ]]>
+      </OnLoad>
+    </Scripts>
+
+    <Size>
+      <AbsDimension x="139" y="111" />
+    </Size>
+    <Anchors>
+      <Anchor point="CENTER" relativeTo="UIParent">
+        <Offset>
+          <AbsDimension x="0" y="0" />
+        </Offset>
+      </Anchor>
+    </Anchors>
+    <TitleRegion setAllPoints="true" />
+    <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+      <BackgroundInsets>
+        <AbsInset left="11" right="12" top="12" bottom="11" />
+      </BackgroundInsets>
+      <TileSize>
+        <AbsValue val="32" />
+      </TileSize>
+      <EdgeSize>
+        <AbsValue val="32" />
+      </EdgeSize>
+    </Backdrop>
+    <Frames>
+      <Button name="AllClear" text="All Clear">
+        <!--<FrameSkin skinid="dcb143e1-a4ab-4e7c-b934-1efa40101d21" frameid="2d508884-59c2-4f83-ae10-27aaad48391b" />-->
+        <Size>
+          <AbsDimension x="93" y="27" />
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="22" y="-59" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick>INCOMING_SendAllCleadMessage()</OnClick>
+        </Scripts>
+        <NormalTexture file="Interface\Buttons\UI-Panel-Button-Up">
+          <TexCoords left="0" right="0.625" top="0" bottom="0.6875" />
+        </NormalTexture>
+        <PushedTexture file="Interface\Buttons\UI-Panel-Button-Down">
+          <TexCoords left="0" right="0.625" top="0" bottom="0.6875" />
+        </PushedTexture>
+        <DisabledTexture file="Interface\Buttons\UI-Panel-Button-Disabled">
+          <TexCoords left="0" right="0.625" top="0" bottom="0.6875" />
+        </DisabledTexture>
+        <HighlightTexture file="Interface\Buttons\UI-Panel-Button-Highlight" alphaMode="ADD">
+          <TexCoords left="0" right="0.625" top="0" bottom="0.6875" />
+        </HighlightTexture>
+        <ButtonText name="$parentText">
+          <Anchors>
+            <Anchor point="CENTER">
+              <Offset>
+                <AbsDimension x="0" y="1" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+          <FontHeight>
+            <AbsValue val="10" />
+          </FontHeight>
+        </ButtonText>
+        <NormalFont style="GameFontNormal" />
+        <HighlightFont style="GameFontHighlight" />
+        <DisabledFont style="GameFontDisable" />
+      </Button>
+      <Button name="Incoming" text="Incoming">
+        <!--<FrameSkin skinid="dcb143e1-a4ab-4e7c-b934-1efa40101d21" frameid="2d508884-59c2-4f83-ae10-27aaad48391b" />-->
+        <Size>
+          <AbsDimension x="93" y="29" />
+        </Size>
+        <Anchors>
+          <Anchor point="TOPLEFT">
+            <Offset>
+              <AbsDimension x="22" y="-24" />
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <OnClick></OnClick>
+        </Scripts>
+        <NormalTexture file="Interface\Buttons\UI-Panel-Button-Up">
+          <TexCoords left="0" right="0.625" top="0" bottom="0.6875" />
+        </NormalTexture>
+        <PushedTexture file="Interface\Buttons\UI-Panel-Button-Down">
+          <TexCoords left="0" right="0.625" top="0" bottom="0.6875" />
+        </PushedTexture>
+        <DisabledTexture file="Interface\Buttons\UI-Panel-Button-Disabled">
+          <TexCoords left="0" right="0.625" top="0" bottom="0.6875" />
+        </DisabledTexture>
+        <HighlightTexture file="Interface\Buttons\UI-Panel-Button-Highlight" alphaMode="ADD">
+          <TexCoords left="0" right="0.625" top="0" bottom="0.6875" />
+        </HighlightTexture>
+        <ButtonText name="$parentText">
+          <Anchors>
+            <Anchor point="CENTER">
+              <Offset>
+                <AbsDimension x="0" y="1" />
+              </Offset>
+            </Anchor>
+          </Anchors>
+          <FontHeight>
+            <AbsValue val="10" />
+          </FontHeight>
+        </ButtonText>
+        <NormalFont style="GameFontNormal" />
+        <HighlightFont style="GameFontHighlight" />
+        <DisabledFont style="GameFontDisable" />
+      </Button>
+    </Frames>
+  </Frame>
 </Ui>
