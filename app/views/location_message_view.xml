@@ -1,18 +1,42 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <Frame name="LocationMessageView">
+  <Frame name="LocationMessageView" enableMouse="true" movable="true">
     <Scripts>
       <OnLoad> 
         <![CDATA[
-        print("memememe")
-        location_manager = LocationManager:new()
-        location_message = LocationMessage:new(location_manager)
-        output = Output:new()
-        location_message_controller = LocationMessageController:new(location_message, output)
+        local valid_locations = 
+        {
+        "Stables", "Blacksmith", "Lumber Mill", "Gold Mine", "Trollbane Hall", "Defiler's Den", "Farm", -- Arathi
+        "Mage Tower", "Draenei Ruins", "Blood Elf Tower", "Fel Reaver Ruins", -- EOTS
+        "The Broken Temple", "Cauldron of Flames", "Central Bridge", "The Chilled Quagemire",
+        "Eastern Bridge", "Flamewatch Tower", "The Forest of Shadows", "Glacial Falls", "The Steppe of Life",
+        "The Sunken Ring", "Western Bridge", "Winter's Edge Tower", "Wintergrasp Fortress", "The Canals"
+        };
 
-        self:RegisterEvent('PLAYER_ENTERING_BATTLEGROUND')
-        self:SetScript('OnEvent', location_message_controller:on_enter_battleground())
+        location_manager = LocationManager:new(valid_locations)
+        output = Output:new()
+        location_message = LocationMessage:new(output)
+        location_message_controller = LocationMessageController:new(location_message, location_manager)
+
+        self:RegisterEvent("ADDON_LOADED");
+        self:RegisterEvent("PLAYER_ENTERING_WORLD");
+        self:RegisterEvent("ZONE_CHANGED");
+        self:RegisterEvent("ZONE_CHANGED_NEW_AREA");
+        self:RegisterEvent("PLAYER_LOGOUT");
+        self:RegisterEvent("WORLD_MAP_UPDATE");
+        self:RegisterEvent("ZONE_CHANGED_NEW_AREA");
+        self:RegisterEvent("PARTY_MEMBERS_CHANGED");
+        self:RegisterEvent("RAID_ROSTER_UPDATE");
+
+        self:SetScript('OnEvent', location_message_controller:on_zone_changed())
+
+        -- self:RegisterForDrag("LeftButton")
         ]]>
       </OnLoad>
+      <OnDragStart>self:StartMoving();</OnDragStart>
+      <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
+      <OnShow>
+        print(MinimapZoneText:GetText())
+      </OnShow>
     </Scripts>
 
     <Size>
@@ -51,7 +75,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
-          <OnClick>INCOMING_SendAllCleadMessage()</OnClick>
+          <OnClick>location_message_controller:on_all_clear_button_pressed()</OnClick>
         </Scripts>
         <NormalTexture file="Interface\Buttons\UI-Panel-Button-Up">
           <TexCoords left="0" right="0.625" top="0" bottom="0.6875" />
@@ -94,7 +118,7 @@
           </Anchor>
         </Anchors>
         <Scripts>
-          <OnClick></OnClick>
+          <OnClick>location_message_controller:on_incoming_button_pressed()</OnClick>
         </Scripts>
         <NormalTexture file="Interface\Buttons\UI-Panel-Button-Up">
           <TexCoords left="0" right="0.625" top="0" bottom="0.6875" />

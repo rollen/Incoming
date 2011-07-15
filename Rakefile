@@ -18,6 +18,8 @@ task :specs do
   end
 end
 
+task :spec => [:specs]
+
 file 'bin/' do
   Dir.mkdir(binary_folder_path)
 end
