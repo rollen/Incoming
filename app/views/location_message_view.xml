@@ -4,12 +4,12 @@
       <OnLoad> 
         <![CDATA[
         self:RegisterForDrag("LeftButton")
+        LocationMessageView:Hide()
         ]]>
       </OnLoad>
       <OnDragStart>self:StartMoving();</OnDragStart>
       <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
       <OnShow>
-        print(MinimapZoneText:GetText())
       </OnShow>
     </Scripts>
 
