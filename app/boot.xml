@@ -4,5 +4,7 @@
   <Script file="lib\output.lua" />
   <Script file="models\location_message.lua" />
   <Script file="boot.lua" />
+  <Script file="factories\location_message_controller_factory.lua" />
+  <Script file="config\slash.lua" />
   <Include file="views\location_message_view.xml" />
 </Ui>

@@ -14,9 +14,7 @@ end
 function LocationManager:player_in_valid_zone()
   local is_found = false
   local player_location = self:current_location()
-  print(player_location)
   for index,valid_location in pairs(self.valid_zones) do
-    print(valid_location)
     if(valid_location == player_location) then
       is_found = true
     else

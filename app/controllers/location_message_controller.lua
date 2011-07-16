@@ -21,10 +21,8 @@ end
 
 function LocationMessageController:on_zone_changed()
   if(self.location_manager:player_in_valid_zone()) then
-    print("valid")
     LocationMessageView:Show()
   else
-    print("invalid")
     LocationMessageView:Hide()
   end
 end
